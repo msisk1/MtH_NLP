@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Matthew L. Sisk, Phd">
-<meta name="dcterms.date" content="2026-04-13">
+<meta name="author" content="Matthew L. Sisk, PhD">
+<meta name="dcterms.date" content="2026-04-14">
 
-<title>Man the Hunter, Natural Language Processing</title>
+<title>Man the Hunter: A brief Text Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,377 +70,897 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="MtH_2026_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="MtH_2026_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="MtH_2026_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="MtH_2026_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="MtH_2026_files/libs/bootstrap/bootstrap-6e5ff12f349f7d7ee99023e5a7f49be9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="MtH_2026_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="MtH_2026_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="MtH_2026_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+
+<script src="MtH_2026_files/libs/datatables-binding-0.34.0/datatables.js"></script>
+
+<script src="MtH_2026_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="MtH_2026_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="MtH_2026_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+
+<script src="MtH_2026_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="MtH_2026_files/libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="MtH_2026_files/libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#data-and-methods" id="toc-data-and-methods" class="nav-link active" data-scroll-target="#data-and-methods">Data and Methods</a></li>
+  <li><a href="#loading-and-processing-the-text" id="toc-loading-and-processing-the-text" class="nav-link" data-scroll-target="#loading-and-processing-the-text">Loading and Processing the Text</a></li>
+  <li><a href="#tokenizing-and-lemmatization" id="toc-tokenizing-and-lemmatization" class="nav-link" data-scroll-target="#tokenizing-and-lemmatization">Tokenizing and Lemmatization</a></li>
+  <li><a href="#word-clouds" id="toc-word-clouds" class="nav-link" data-scroll-target="#word-clouds">Word Clouds</a></li>
+  <li><a href="#gender-and-subsistence-term-frequencies" id="toc-gender-and-subsistence-term-frequencies" class="nav-link" data-scroll-target="#gender-and-subsistence-term-frequencies">Gender and Subsistence Term Frequencies</a></li>
+  <li><a href="#contextual-analysis-hunter-gatherer-as-a-compound" id="toc-contextual-analysis-hunter-gatherer-as-a-compound" class="nav-link" data-scroll-target="#contextual-analysis-hunter-gatherer-as-a-compound">Contextual Analysis: Hunter-Gatherer as a Compound</a></li>
+  <li><a href="#appendix-survey-of-stopword-lists" id="toc-appendix-survey-of-stopword-lists" class="nav-link" data-scroll-target="#appendix-survey-of-stopword-lists">Appendix: Survey of Stopword Lists</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Man the Hunter, Natural Language Processing</h1>
+<h1 class="title">Man the Hunter: A brief Text Analysis</h1>
+<p class="subtitle lead">Examining word frequency in Lee &amp; DeVore (1968)</p>
 </div>
 
 
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliations</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Matthew L. Sisk, PhD </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Lucy Family Institute for Data &amp; Society
+          </p>
+        <p class="affiliation">
+            University of Notre Dame
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Matthew L. Sisk, Phd </p>
-          </div>
-  </div>
-    
+      
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 13, 2026</p>
+      <p class="date">April 14, 2026</p>
     </div>
   </div>
   
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    <p>This document provides a reproducible text analysis of the <em>Man the Hunter</em> volume (Lee &amp; DeVore, 1968) in particular to assess a word cloud presented in Venkataraman et al.&nbsp;(2026). It demonstrates that the word cloud presented in that paper inadvertently suppressed the word “man” through use of a default stopword list (onix) that treats “man” and “men” as generic terms for “human” while retaining “woman” as a content word. It also examines the relative frequency with which hunting and gathering (and men and women) are discussed in the volume, and the contexts in which these terms appear.</p>
+  </div>
+</div>
 
 
 </header>
 
 
-<section id="loading-data" class="level2">
-<h2 class="anchored" data-anchor-id="loading-data">Loading data</h2>
-<p>This just loads the relevant packages for text analysis and downloads the text of the book from the internet archive.</p>
+<section id="data-and-methods" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-methods">Data and Methods</h2>
+<p>The text of <em>Man the Hunter</em> (Lee &amp; DeVore, 1968) was obtained from the Internet Archive (plain text format). Analysis was conducted in R using the <code>tidytext</code>, <code>textstem</code>, and <code>wordcloud</code> packages. The table below summarizes the key methodological choices.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())  </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textstem)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">"MtH.txt"</span>)){</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(<span class="st">"https://ia801705.us.archive.org/30/items/ManTheHunter/Man%20the%20Hunter_djvu.txt"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">destfile =</span> <span class="st">"MtH.txt"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>mth_unmodified <span class="ot">&lt;-</span><span class="fu">readLines</span>(<span class="st">"MtH.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Step    =</span> <span class="fu">c</span>(<span class="st">"Source text"</span>, <span class="st">"Lines included"</span>, <span class="st">"Lemmatizer"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Stopword lists"</span>, <span class="st">"Minimum word length"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Detail  =</span> <span class="fu">c</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Internet Archive djvu.txt (Man the Hunter, Lee &amp; DeVore 1968)"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lines 746 to 36,991 (main text only, excluding front matter and references)"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"textstem R package (dictionary-based lemmatization)"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tidytext stop_words: SMART, Snowball, onix"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"3 characters"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Source text</td>
+<td style="text-align: left;">Internet Archive djvu.txt (Man the Hunter, Lee &amp; DeVore 1968)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lines included</td>
+<td style="text-align: left;">Lines 746 to 36,991 (main text only, excluding front matter and references)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lemmatizer</td>
+<td style="text-align: left;">textstem R package (dictionary-based lemmatization)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stopword lists</td>
+<td style="text-align: left;">tidytext stop_words: SMART, Snowball, onix</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Minimum word length</td>
+<td style="text-align: left;">3 characters</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </section>
-<section id="processing-the-text" class="level2">
-<h2 class="anchored" data-anchor-id="processing-the-text">Processing the text</h2>
-<p>This is cleaning up the text. Mainly removing the line breaks and rejoining words that were split between lines with a hyphen, taking out the page numbers and making all of the special characters (like apostrophes) consistent</p>
+<section id="loading-and-processing-the-text" class="level2">
+<h2 class="anchored" data-anchor-id="loading-and-processing-the-text">Loading and Processing the Text</h2>
+<p>The raw text file is downloaded once and cached locally. The following cleaning steps are applied before analysis:</p>
+<ul>
+<li>Apostrophe variants (curly quotes, backticks) are standardized to a straight apostrophe</li>
+<li>Windows-style line endings are converted to Unix style</li>
+<li>Words split across lines with a hyphen are rejoined (e.g., <code>anthro-\npologists</code> becomes <code>anthropologists</code>)</li>
+<li>Standalone page numbers are removed</li>
+<li>The compound <code>huntergatherer</code>, created by the line-break joining step, is split back into two tokens</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>preface_starts <span class="ot">&lt;-</span> <span class="dv">75</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>part1_starts <span class="ot">&lt;-</span> <span class="dv">746</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>references_starts <span class="ot">&lt;-</span> <span class="dv">36991</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> mth_unmodified[part1_starts<span class="sc">:</span>references_starts] </span>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">"MtH.txt"</span>)) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://ia801705.us.archive.org/30/items/ManTheHunter/Man%20the%20Hunter_djvu.txt"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> <span class="st">"MtH.txt"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>modified_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(raw, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"['\u2018\u2019\u201A\u201B\u0060\u00B4]"</span>, <span class="st">"'"</span>, .) <span class="sc">%&gt;%</span> <span class="co">#standardize apostrophes</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\r\n</span><span class="st">"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, .) <span class="sc">%&gt;%</span> <span class="co">#fix line endings</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"([a-z])-</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\n\\</span><span class="st">s*([a-z])"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1</span><span class="sc">\\</span><span class="st">2"</span>, .) <span class="sc">%&gt;%</span> <span class="co">#remove hyphenated lines</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(?m)^</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">""</span>, ., <span class="at">perl =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span><span class="co"># cut page numbers</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"huntergatherers?</span><span class="sc">\\</span><span class="st">b"</span>, <span class="st">"hunter gatherer"</span>, .) <span class="sc">%&gt;%</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"huntinggathering"</span>, <span class="st">"hunting gatherering"</span>, .)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>mth_unmodified <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"MtH.txt"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Line number limits for the main text in the file</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>preface_starts <span class="ot">&lt;-</span> <span class="dv">75</span>        <span class="co"># start of the prefac (not used)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>part1_starts      <span class="ot">&lt;-</span> <span class="dv">746</span>    <span class="co"># start of main text (after front matter)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>references_starts <span class="ot">&lt;-</span> <span class="dv">36991</span>  <span class="co"># end of main text (before references)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> mth_unmodified[part1_starts<span class="sc">:</span>references_starts]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>modified_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(raw, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"['\u2018\u2019\u201A\u201B\u0060\u00B4]"</span>, <span class="st">"'"</span>, .) <span class="sc">%&gt;%</span>  <span class="co"># standardize apostrophes</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\r\n</span><span class="st">"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, .) <span class="sc">%&gt;%</span>                          <span class="co"># fix line endings</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"([a-z])-</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\n\\</span><span class="st">s*([a-z])"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1</span><span class="sc">\\</span><span class="st">2"</span>, .) <span class="sc">%&gt;%</span> <span class="co"># rejoin hyphenated linebreaks</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(?m)^</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">""</span>, ., <span class="at">perl =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span>  <span class="co"># remove page numbers</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"huntergatherers?</span><span class="sc">\\</span><span class="st">b"</span>, <span class="st">"hunter gatherer"</span>, .) <span class="sc">%&gt;%</span> <span class="co"># split inaccurate compound</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"huntinggathering"</span>, <span class="st">"hunting gathering"</span>, .)    <span class="co"># split inaccurate compound</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
-<section id="tolkenizing" class="level2">
-<h2 class="anchored" data-anchor-id="tolkenizing">Tolkenizing</h2>
-<p>After cleaning, the text is usually processed a little more. One process is called lemmantization, or making words into their roots (like cats becoming cat or running becoming run). In this context, it does a pretty good job, leaving both hunt (the verb and hunter (the noun) as separate.</p>
-<p>The second step is removing stop words: common words that are unrelated to the sentiment or topic. This could be things like “is, he, or, and” These tend to be standard lists, sometimes with additional ones added. The package I use here has three different ones that you can either use together or individually. The problem is one in particular (an older one called onix, that was meant for information retrieval and searching) contains the words “man” and “men”. It does not contain “woman” or “women” The reason for this is presumably that man/men was thought to be shorthand for “human” so if you are searching a text for “man’s evolution” the word “man” is not important to the actual search and could lead you astray. Kind of classic gender bias in language and text. The thing in this context though is that it should have been really obvious since its the title of the book. And I should note, that I did a quick scan of the main stop word lists and onix is the only one that has man/men on it.</p>
-<p>So, in this part, I am making the stop word list in three ways. 1: just using one of the main packages for language processing as is. One, taking that list and removing “man” and “men” from it but otherwise leaving it as is. And last, just not using the onix stopword list.</p>
+<section id="tokenizing-and-lemmatization" class="level2">
+<h2 class="anchored" data-anchor-id="tokenizing-and-lemmatization">Tokenizing and Lemmatization</h2>
+<p>Tokenization splits the text into individual words. Lemmatization then reduces each word to its root form; for example, “cats” becomes “cat” and “running” becomes “run”. Notably, the lemmatizer correctly distinguishes between <em>hunt</em> (the verb) and <em>hunter</em> (the noun), keeping them as separate tokens. Possessive suffixes (<code>'s</code>) are stripped before lemmatization since the lemmatizer does not handle them consistently.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>base_stopwords <span class="ot">&lt;-</span> stop_words </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cut_stopwords <span class="ot">&lt;-</span> stop_words <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>)))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>no_onix_stopwords <span class="ot">&lt;-</span> stop_words <span class="sc">|&gt;</span> <span class="fu">filter</span>(lexicon <span class="sc">!=</span> <span class="st">"onix"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>bag_of_words <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> modified_text) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word_orig, text) <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word_orig =</span> <span class="fu">gsub</span>(<span class="st">"'s$"</span>, <span class="st">""</span>, word_orig)) <span class="sc">%&gt;%</span> <span class="co">#removing possessives</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">nchar</span>(word_orig) <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">lemmatize_words</span>(word_orig)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"[0-9]"</span>)) <span class="co">#removing things that are just numbers</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>full_sum_table <span class="ot">&lt;-</span> bag_of_words <span class="sc">%&gt;%</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> T)<span class="sc">%&gt;%</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">orig =</span> word <span class="sc">%in%</span>  base_stopwords<span class="sc">$</span>word,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">no_onix =</span> word <span class="sc">%in%</span> no_onix_stopwords<span class="sc">$</span>word,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">man_back =</span> word <span class="sc">%in%</span> cut_stopwords<span class="sc">$</span>word)<span class="sc">%&gt;%</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>orig <span class="sc">|</span> <span class="sc">!</span>no_onix <span class="sc">|</span> <span class="sc">!</span>man_back)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bag_of_words <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> modified_text) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word_orig, text) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word_orig =</span> <span class="fu">gsub</span>(<span class="st">"'s$"</span>, <span class="st">""</span>, word_orig)) <span class="sc">%&gt;%</span>  <span class="co"># strip possessives</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">nchar</span>(word_orig) <span class="sc">&gt;</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span>                     <span class="co"># minimum 3 characters</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">lemmatize_words</span>(word_orig)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"[0-9]"</span>))      <span class="co"># remove numeric tokens after lemmatizing</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="co"># o tavoid e.g."tenth" becoming "10"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<section id="stopword-lists" class="level3">
+<h3 class="anchored" data-anchor-id="stopword-lists">Stopword Lists</h3>
+<p>Stopwords are common words removed before analysis, typically function words like “is”, “the”, “and”. The <code>tidytext</code> package bundles three English stopword lists: SMART, Snowball, and onix. When used together (the default), any word appearing in <em>any</em> of the three lists is removed.</p>
+<p>The onix stopword list is and older and larger list designed for search indexing. As such, it contains “men” and “man” but not “woman” or “women.” As the Appendix below shows, this is rare for an English stop word list and is likely the result of its age and original context.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>base_stopwords    <span class="ot">&lt;-</span> stop_words</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cut_stopwords     <span class="ot">&lt;-</span> stop_words <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>(word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>)))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>no_onix_stopwords <span class="ot">&lt;-</span> stop_words <span class="sc">%&gt;%</span> <span class="fu">filter</span>(lexicon <span class="sc">!=</span> <span class="st">"onix"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Stopword list</span><span class="st">`</span>    <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Default (all three lists)"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"man/men restored"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"onix excluded entirely"</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Contains 'man'</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"man"</span> <span class="sc">%in%</span> base_stopwords<span class="sc">$</span>word,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"man"</span> <span class="sc">%in%</span> cut_stopwords<span class="sc">$</span>word,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"man"</span> <span class="sc">%in%</span> no_onix_stopwords<span class="sc">$</span>word),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Contains 'woman'</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"woman"</span> <span class="sc">%in%</span> base_stopwords<span class="sc">$</span>word,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"woman"</span> <span class="sc">%in%</span> cut_stopwords<span class="sc">$</span>word,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"woman"</span> <span class="sc">%in%</span> no_onix_stopwords<span class="sc">$</span>word),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">List size</span><span class="st">`</span>        <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">nrow</span>(base_stopwords),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">nrow</span>(cut_stopwords),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">nrow</span>(no_onix_stopwords))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Stopword list</th>
+<th style="text-align: left;">Contains ‘man’</th>
+<th style="text-align: left;">Contains ‘woman’</th>
+<th style="text-align: right;">List size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Default (all three lists)</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">1149</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">man/men restored</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">1147</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">onix excluded entirely</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">745</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>full_sum_table <span class="ot">&lt;-</span> bag_of_words <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">orig     =</span> word <span class="sc">%in%</span> base_stopwords<span class="sc">$</span>word,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">no_onix  =</span> word <span class="sc">%in%</span> no_onix_stopwords<span class="sc">$</span>word,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">man_back =</span> word <span class="sc">%in%</span> cut_stopwords<span class="sc">$</span>word</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>orig <span class="sc">|</span> <span class="sc">!</span>no_onix <span class="sc">|</span> <span class="sc">!</span>man_back)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In this case, using the onix list inadvertently removes a semantically significant word, and part of the title, from the analysis. Three versions of the stopword list are used here for comparison:</p>
+<ol type="1">
+<li><p>Using the default tidytext list of all three.</p></li>
+<li><p>Using the default list , but manually removing “man” and “men”</p></li>
+<li><p>Excluding the onix list entirely</p></li>
+</ol>
+</section>
 </section>
 <section id="word-clouds" class="level2">
 <h2 class="anchored" data-anchor-id="word-clouds">Word Clouds</h2>
-<p>Here i just made a way to do the word cloud so it kind of looks like the one in the paper</p>
+<p>The word clouds below replicate the style of Figure 3 in Venkataraman et al.&nbsp;(2026), with word size proportional to frequency. Three versions are shown, one for each stopword configuration. Each cloud is followed by a table of the 10 most frequent words in that version.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>make_word_cloud <span class="ot">&lt;-</span> <span class="cf">function</span>(table, stopword_col, <span class="at">seed =</span> <span class="dv">44</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">width =</span> <span class="dv">1600</span>, <span class="at">height =</span> <span class="dv">900</span>, </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">file =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  top200 <span class="ot">&lt;-</span> table <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>{{ stopword_col }}) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">200</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))          <span class="co"># zero margins</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(file)) {</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">png</span>(file, <span class="at">width =</span> width, <span class="at">height =</span> height, <span class="at">res =</span> <span class="dv">150</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wordcloud</span>(</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">words        =</span> top200<span class="sc">$</span>word,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq         =</span> top200<span class="sc">$</span>n,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">min.freq     =</span> <span class="dv">1</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.words    =</span> <span class="dv">200</span>,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">random.order =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">rot.per      =</span> <span class="fl">0.0</span>,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors       =</span> <span class="st">"black"</span>,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale        =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.5</span>),</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">random.color =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(file)) <span class="fu">dev.off</span>()</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>make_word_cloud <span class="ot">&lt;-</span> <span class="cf">function</span>(table, <span class="at">stopword_col =</span> <span class="cn">NULL</span>, <span class="at">seed =</span> <span class="dv">44</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">width =</span> <span class="dv">1600</span>, <span class="at">height =</span> <span class="dv">900</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">file =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(stopword_col)) {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    table <span class="ot">&lt;-</span> table <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>{{ stopword_col }})</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  top200 <span class="ot">&lt;-</span> table <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">200</span>)  </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(file)) {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">png</span>(file, <span class="at">width =</span> width, <span class="at">height =</span> height, <span class="at">res =</span> <span class="dv">150</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wordcloud</span>(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">words        =</span> top200<span class="sc">$</span>word,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq         =</span> top200<span class="sc">$</span>n,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">min.freq     =</span> <span class="dv">1</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.words    =</span> <span class="dv">200</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">random.order =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">rot.per      =</span> <span class="fl">0.0</span>,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors       =</span> <span class="st">"black"</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale        =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.5</span>),</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">random.color =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(file)) <span class="fu">dev.off</span>()</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>top10_table <span class="ot">&lt;-</span> <span class="cf">function</span>(table, <span class="at">stopword_col =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(stopword_col)) {        <span class="co"># fixed: was is.null, should be !is.null</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    table <span class="ot">&lt;-</span> table <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>{{ stopword_col }})</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  table <span class="sc">%&gt;%</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(word, n) <span class="sc">%&gt;%</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Word"</span>, <span class="st">"Frequency"</span>))</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<section id="default-stopword-list" class="level3">
+<h3 class="anchored" data-anchor-id="default-stopword-list">1. Default stopword list</h3>
+<p>Using the default <code>stop_words</code> list, which includes the onix lexicon. “man” and “men” are silently removed; “woman” is retained.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_word_cloud</span>(<span class="at">table =</span> full_sum_table, <span class="at">stopword_col =</span> orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_word_cloud</span>(<span class="at">table =</span> full_sum_table, <span class="at">stopword_col =</span> orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="MtH_2026_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="MtH_2026_files/figure-html/cloud-orig-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Word cloud with default stopword list applied; ‘man’ and ‘men’ are absent.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>For the original data (above), it looks basically like what came before</p>
+<p>The 10 most frequent words using the default stopword list are shown below. Venkataraman et al.&nbsp;(2026) report approximately 835 occurrences of “hunt” in their Figure 3; our replication yields 883 occurrences. The small discrepancy likely reflects minor differences in text extraction or preprocessing between the two analyses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_word_cloud</span>(<span class="at">table =</span> full_sum_table, <span class="at">stopword_col =</span> man_back)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">top10_table</span>(full_sum_table, orig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="MtH_2026_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>If we just add man back in, it looks a little better. “Man” is mentioned around 500 times and is the 4th most common word</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_word_cloud</span>(<span class="at">table =</span> full_sum_table, <span class="at">stopword_col =</span> no_onix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="MtH_2026_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>If we just skip the onix stop word list entirely it gets even a little more interesting. One of the other main words that was removed in their analysis was “group” which is actually the most common word, and kind of relevant in this context. Here are all the words that were removed from their word cloud, but were mentioned more than 50 times in the original text. Some are fine, but many (e.g.&nbsp;group, man, member, area) contain valuable contextual information for an analysis of human settlement. Using the onix stopword list removed all of that.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>full_sum_table <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span><span class="dv">50</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>no_onix <span class="sc">&amp;</span> orig) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "group"     "man"       "area"      "good"      "year"      "make"     
- [7] "large"     "case"      "great"     "find"      "work"      "part"     
-[13] "small"     "early"     "give"      "present"   "point"     "important"
-[19] "fact"      "kind"      "show"      "long"      "high"      "problem"  
-[25] "member"    "place"     "state"     "interest"  "general"   "young"    
-[31] "number"    "order"     "clear"     "generally" "back"      "thing"    
-[37] "today"    </code></pre>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Word</th>
+<th style="text-align: right;">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">hunt</td>
+<td style="text-align: right;">883</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hunter</td>
+<td style="text-align: right;">655</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">food</td>
+<td style="text-align: right;">563</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">people</td>
+<td style="text-align: right;">504</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">population</td>
+<td style="text-align: right;">496</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">social</td>
+<td style="text-align: right;">446</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">marriage</td>
+<td style="text-align: right;">434</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">band</td>
+<td style="text-align: right;">401</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">time</td>
+<td style="text-align: right;">370</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">system</td>
+<td style="text-align: right;">368</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
-<section id="quick-topic-classification" class="level2">
-<h2 class="anchored" data-anchor-id="quick-topic-classification">Quick topic classification</h2>
-<p>To go a little further, we can see if the comparisons between man/women and hunter/gatherer are roughly equal. If both of these topics were both broadly discussed at the conference and in the volume despite the name, then we would expect roughly equal numbers and in a similar variety of contexts. To be clear, some of the processing above and the tokenizing splits the compound word hunter-gatherer ro two separate words (same with hunting-gatherering).</p>
-<p>To start, If the only time those words were in there were when hunter-gatherer was mentioned as a single thing, we’d expect them to be roughly equal.</p>
+<section id="with-man-and-men-restored" class="level3">
+<h3 class="anchored" data-anchor-id="with-man-and-men-restored">2. With “man” and “men” restored</h3>
+<p>Identical to above, but with “man” and “men” removed from the stopword list (so included in the final product).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Key words to compare</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>key_words <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>, <span class="st">"woman"</span>, <span class="st">"women"</span>, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>               <span class="st">"hunt"</span>, <span class="st">"hunter"</span>, <span class="st">"gather"</span>, <span class="st">"gatherer"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>full_sum_table <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word <span class="sc">%in%</span> key_words) <span class="sc">%&gt;%</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">concept =</span> <span class="fu">case_when</span>(</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>)           <span class="sc">~</span> <span class="st">"man/men"</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"woman"</span>, <span class="st">"women"</span>)       <span class="sc">~</span> <span class="st">"woman/women"</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"hunt"</span>, <span class="st">"hunter"</span>)       <span class="sc">~</span> <span class="st">"hunt/hunter"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"gather"</span>, <span class="st">"gatherer"</span>)   <span class="sc">~</span> <span class="st">"gather/gatherer"</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(concept) <span class="sc">%&gt;%</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(n))<span class="sc">%&gt;%</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  concept         total
-  &lt;chr&gt;           &lt;int&gt;
-1 hunt/hunter      1538
-2 man/men           568
-3 gather/gatherer   517
-4 woman/women       220</code></pre>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_word_cloud</span>(<span class="at">table =</span> full_sum_table, <span class="at">stopword_col =</span> man_back)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="MtH_2026_files/figure-html/cloud-manback-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Word cloud with ‘man’ and ‘men’ restored. ‘Man’ now appears prominently, consistent with its frequency in the text.</figcaption>
+</figure>
 </div>
 </div>
-<p>Hunt/hunting is mentioned about three times as often as gather/gathering (1538 to 568) and man/men is mentioned more than twice as often as woman/women (517 to 220).</p>
-<p>But the context that these words are mentioned also plays a role “hunter-gatherer” is a compound word and, we also need to see how many times “gathering” is mentioned independent of that.</p>
+</div>
+<p>“Man” appears 568 times in the text and ranks 3 among content words once restored. The top 10 words are:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Looking at how often gatherer is mentioned without hunter</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>words_nearby <span class="ot">&lt;-</span> bag_of_words <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> no_onix_stopwords<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">next_word =</span> <span class="fu">lead</span>(word),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">pre_word  =</span> <span class="fu">lag</span>(word)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(word, <span class="st">"hunt|gath"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(word_orig, pre_word, word, next_word)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># what precedes gatherer?</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>words_nearby <span class="sc">%&gt;%</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word, <span class="st">"gath"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pre_word, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 3
-  pre_word word         n
-  &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;
-1 hunter   gatherer   232
-2 hunt     gather     135
-3 food     gatherer    21
-4 food     gather      12
-5 woman    gather       5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what follows hunter?</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>words_nearby <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word, <span class="st">"hunt"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, next_word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 3
-  word   next_word     n
-  &lt;chr&gt;  &lt;chr&gt;     &lt;int&gt;
-1 hunter gatherer    232
-2 hunt   gather      135
-3 hunt   people       35
-4 hunt   society      31
-5 hunt   human        30</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(words_nearby<span class="sc">$</span>word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "hunter"         "gatherer"       "hunt"           "gather"        
- [5] "huntingford"    "huntinglearly"  "foodgathering"  "hunti"         
- [9] "gatherering"    "gathering"      "nethunters"     "ungathered"    
-[13] "hunterprovider" "nonhunter"      "grouphunting"   "foodgatherers" </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#to simplify the output, casting all similar words together.</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>words_nearby <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">word_s      =</span> <span class="fu">case_when</span>(</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(word,      <span class="st">"hunt"</span>) <span class="sc">~</span> <span class="st">"hunt"</span>,</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(word,      <span class="st">"gath"</span>) <span class="sc">~</span> <span class="st">"gather"</span>,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                           <span class="sc">~</span> word</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">pre_word_s  =</span> <span class="fu">case_when</span>(</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pre_word,  <span class="st">"hunt"</span>) <span class="sc">~</span> <span class="st">"hunt"</span>,</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pre_word,  <span class="st">"gath"</span>) <span class="sc">~</span> <span class="st">"gather"</span>,</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                           <span class="sc">~</span> pre_word</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">next_word_s =</span> <span class="fu">case_when</span>(</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(next_word, <span class="st">"hunt"</span>) <span class="sc">~</span> <span class="st">"hunt"</span>,</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(next_word, <span class="st">"gath"</span>) <span class="sc">~</span> <span class="st">"gather"</span>,</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                           <span class="sc">~</span> next_word</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>tog_gath <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word_s, <span class="st">"gath"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pre_word_s, word_s, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent  =</span> <span class="dv">100</span><span class="sc">*</span>n<span class="sc">/</span><span class="fu">sum</span>(n))</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>tog_gath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 96 × 4
-   pre_word_s word_s     n percent
-   &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;
- 1 hunt       gather   371  70.5  
- 2 food       gather    33   6.27 
- 3 woman      gather     5   0.951
- 4 female     gather     4   0.760
- 5 activity   gather     3   0.570
- 6 datum      gather     3   0.570
- 7 dependence gather     3   0.570
- 8 fish       gather     3   0.570
- 9 man        gather     3   0.570
-10 people     gather     3   0.570
-# ℹ 86 more rows</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what follows hunter?</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>tog_hunt_post <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word_s, <span class="st">"hunt"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word_s, next_word_s, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent  =</span> <span class="dv">100</span><span class="sc">*</span>n<span class="sc">/</span><span class="fu">sum</span>(n))</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>tog_hunt_post</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 577 × 4
-   word_s next_word_s     n percent
-   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt;
- 1 hunt   gather        371  24.0  
- 2 hunt   people         36   2.33 
- 3 hunt   group          34   2.20 
- 4 hunt   human          32   2.07 
- 5 hunt   society        31   2.00 
- 6 hunt   large          25   1.62 
- 7 hunt   fish           22   1.42 
- 8 hunt   life           20   1.29 
- 9 hunt   live           20   1.29 
-10 hunt   hunt           15   0.970
-# ℹ 567 more rows</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what comes before hunter?</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>tog_hunt_pre <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word_s, <span class="st">"hunt"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pre_word_s,word_s,  <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent  =</span> <span class="dv">100</span><span class="sc">*</span>n<span class="sc">/</span><span class="fu">sum</span>(n))</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>tog_hunt_pre</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 712 × 4
-   pre_word_s  word_s     n percent
-   &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;   &lt;dbl&gt;
- 1 man         hunt      37   2.39 
- 2 live        hunt      23   1.49 
- 3 modern      hunt      22   1.42 
- 4 prehistoric hunt      21   1.36 
- 5 study       hunt      21   1.36 
- 6 human       hunt      16   1.03 
- 7 net         hunt      16   1.03 
- 8 primitive   hunt      16   1.03 
- 9 hunt        hunt      15   0.970
-10 world       hunt      14   0.905
-# ℹ 702 more rows</code></pre>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">top10_table</span>(full_sum_table, man_back)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Word</th>
+<th style="text-align: right;">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">hunt</td>
+<td style="text-align: right;">883</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hunter</td>
+<td style="text-align: right;">655</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">man</td>
+<td style="text-align: right;">568</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">food</td>
+<td style="text-align: right;">563</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">people</td>
+<td style="text-align: right;">504</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">population</td>
+<td style="text-align: right;">496</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">social</td>
+<td style="text-align: right;">446</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">marriage</td>
+<td style="text-align: right;">434</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">band</td>
+<td style="text-align: right;">401</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">time</td>
+<td style="text-align: right;">370</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>So, ~71 % of the 526 times gathering is mentioned it is immediately preceded by hunter,</p>
-<p>but only ~24% of the 1,547 times hunting is mentioned it is not followed by gathering.</p>
-<p>And the most common work to come before hunting is (obviously) “man” but its not all that common</p>
-<p>Note: If anyone is interested in that one reference to “hunterprovider” with female after it as a possible counter example, i would suggest looking at the original manuscript. Its on page 302</p>
+</section>
+<section id="with-the-onix-list-excluded-entirely" class="level3">
+<h3 class="anchored" data-anchor-id="with-the-onix-list-excluded-entirely">With the onix list excluded entirely</h3>
+<p>Excluding the onix list reveals additional words suppressed in the original analysis.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_word_cloud</span>(<span class="at">table =</span> full_sum_table, <span class="at">stopword_col =</span> no_onix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="MtH_2026_files/figure-html/cloud-noonix-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Word cloud with the onix stopword list excluded. Additional contextually meaningful words become visible, including ‘group’, the most frequent word in the volume.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>With the onix list excluded, “group” emerges as the most frequent word, a term with clear contextual relevance to a volume about human social organisation. The top 10 words are:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">top10_table</span>(full_sum_table, no_onix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Word</th>
+<th style="text-align: right;">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">group</td>
+<td style="text-align: right;">1014</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hunt</td>
+<td style="text-align: right;">883</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hunter</td>
+<td style="text-align: right;">655</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">man</td>
+<td style="text-align: right;">568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">food</td>
+<td style="text-align: right;">563</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">area</td>
+<td style="text-align: right;">509</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">people</td>
+<td style="text-align: right;">504</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">population</td>
+<td style="text-align: right;">496</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">social</td>
+<td style="text-align: right;">446</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">marriage</td>
+<td style="text-align: right;">434</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="words-removed-by-the-onix-list-with-more-than-50-occurrences" class="level3">
+<h3 class="anchored" data-anchor-id="words-removed-by-the-onix-list-with-more-than-50-occurrences">Words removed by the onix list with more than 50 occurrences</h3>
+<p>The following words were suppressed in the original word cloud by the onix stopword list despite appearing more than 50 times in the main text. Some are genuine function words, but many (including “group”, “man”, “member”, and “area”) carry substantive contextual meaning in an analysis of hunter-gatherer social organisation.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>onix_removed <span class="ot">&lt;-</span> full_sum_table <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>no_onix <span class="sc">&amp;</span> orig) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(word, n) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>n_onix_removed <span class="ot">&lt;-</span> <span class="fu">nrow</span>(onix_removed)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dt_table</span>(onix_removed,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption    =</span> <span class="fu">paste</span>(n_onix_removed, <span class="st">"words suppressed by the onix stopword list with more than 50 occurrences."</span>),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">pageLength =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a15b6d702f7fd86fe023" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a15b6d702f7fd86fe023">{"x":{"filter":"none","vertical":false,"caption":"<caption>37 words suppressed by the onix stopword list with more than 50 occurrences.<\/caption>","data":[["group","man","area","good","year","make","large","case","great","find","work","part","small","early","give","present","point","important","fact","kind","show","long","high","problem","member","place","state","interest","general","young","number","order","clear","generally","back","thing","today"],[1014,568,509,376,324,319,317,272,248,227,215,210,208,204,203,196,195,190,184,178,175,159,149,147,131,113,108,107,106,100,96,81,70,65,63,60,54]],"container":"<table class=\"compact stripe hover\">\n  <thead>\n    <tr>\n      <th>word<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"tip","columnDefs":[{"className":"dt-right","targets":1},{"name":"word","targets":0},{"name":"n","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="gender-and-subsistence-term-frequencies" class="level2">
+<h2 class="anchored" data-anchor-id="gender-and-subsistence-term-frequencies">Gender and Subsistence Term Frequencies</h2>
+<p>It has also been argued that the <em>Man the Hunter</em> volume was broader than commonly portrayed and gave meaningful attention to women’s contributions to subsistence. The raw frequencies of key terms can help address this directly.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>key_words <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>, <span class="st">"woman"</span>, <span class="st">"women"</span>,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"hunt"</span>, <span class="st">"hunter"</span>, <span class="st">"gather"</span>, <span class="st">"gatherer"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>concept_counts <span class="ot">&lt;-</span> full_sum_table <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word <span class="sc">%in%</span> key_words) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">concept =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>)         <span class="sc">~</span> <span class="st">"man/men"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"woman"</span>, <span class="st">"women"</span>)     <span class="sc">~</span> <span class="st">"woman/women"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"hunt"</span>, <span class="st">"hunter"</span>)     <span class="sc">~</span> <span class="st">"hunt/hunter"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    word <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"gather"</span>, <span class="st">"gatherer"</span>) <span class="sc">~</span> <span class="st">"gather/gatherer"</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(concept) <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total))</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>concept_counts <span class="sc">%&gt;%</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Concept"</span>, <span class="st">"Total occurrences"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Concept</th>
+<th style="text-align: right;">Total occurrences</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">hunt/hunter</td>
+<td style="text-align: right;">1538</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">man/men</td>
+<td style="text-align: right;">568</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gather/gatherer</td>
+<td style="text-align: right;">519</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">woman/women</td>
+<td style="text-align: right;">220</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Hunt/hunting is mentioned 3 times as often as gather/gathering (1538 vs.&nbsp;519) and man/men is mentioned 2.6 times as often as woman/women (568 vs.&nbsp;220).</p>
+</section>
+<section id="contextual-analysis-hunter-gatherer-as-a-compound" class="level2">
+<h2 class="anchored" data-anchor-id="contextual-analysis-hunter-gatherer-as-a-compound">Contextual Analysis: Hunter-Gatherer as a Compound</h2>
+<p>The frequencies above require an important qualification. “Hunter-gatherer” is a compound term used throughout the volume, and the tokenization process splits it into two separate tokens. This inflates the apparent frequency of both “hunter” and “gatherer” relative to their independent usage. The analysis below examines how often each term appears alongside the other.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>words_nearby <span class="ot">&lt;-</span> bag_of_words <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> no_onix_stopwords<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">next_word =</span> <span class="fu">lead</span>(word),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">pre_word  =</span> <span class="fu">lag</span>(word)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(word, <span class="st">"hunt|gath"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(word_orig, pre_word, word, next_word) <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">word_s =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(word,      <span class="st">"hunt"</span>) <span class="sc">~</span> <span class="st">"hunt"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(word,      <span class="st">"gath"</span>) <span class="sc">~</span> <span class="st">"gather"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                          <span class="sc">~</span> word</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">pre_word_s =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pre_word,  <span class="st">"hunt"</span>) <span class="sc">~</span> <span class="st">"hunt"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pre_word,  <span class="st">"gath"</span>) <span class="sc">~</span> <span class="st">"gather"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                          <span class="sc">~</span> pre_word</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">next_word_s =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(next_word, <span class="st">"hunt"</span>) <span class="sc">~</span> <span class="st">"hunt"</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(next_word, <span class="st">"gath"</span>) <span class="sc">~</span> <span class="st">"gather"</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                          <span class="sc">~</span> next_word</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="what-precedes-gather" class="level3">
+<h3 class="anchored" data-anchor-id="what-precedes-gather">What precedes “gather”?</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tog_gath <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word_s, <span class="st">"gath"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pre_word_s, word_s, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dt_table</span>(tog_gath,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption    =</span> <span class="st">"Words immediately preceding gather/gatherer/gathering."</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">pageLength =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-2de93a507504a2b43dcb" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2de93a507504a2b43dcb">{"x":{"filter":"none","vertical":false,"caption":"<caption>Words immediately preceding gather/gatherer/gathering.<\/caption>","data":[["hunt","food","woman","female","activity","datum","dependence","fish","man","people","ceremonial","classify","eat","equator","gather","honey","include","northern","proportion","absence","agriculture","apd","approach","assertion","august","average","band","bother","bypass","calorie","carry","cent","circumstance","climate","common","contrast","contribution","define","depend","ecology","emphasis","emphasize","evidence","farm","figure","fledge","fond","fortunately","gear","group","grow","grub","hadza","hour","hunger","imagine","importance","important","latitude","lee","long","manage","monkey","negligible","net","offer","ooocalories","opportunity","organization","output","pattern","population","preagricultural","predominantly","productive","read","reallocation","reason","refer","review","root","sago","season","seed","shellfish","sophistication","source","stature","symposium","systematically","thrust","tool","transform","versus","week","year"],["gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather","gather"],[371,33,5,4,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[70.5,6.3,1,0.8,0.6,0.6,0.6,0.6,0.6,0.6,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2]],"container":"<table class=\"compact stripe hover\">\n  <thead>\n    <tr>\n      <th>pre_word_s<\/th>\n      <th>word_s<\/th>\n      <th>n<\/th>\n      <th>percent<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"pre_word_s","targets":0},{"name":"word_s","targets":1},{"name":"n","targets":2},{"name":"percent","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="what-follows-hunt" class="level3">
+<h3 class="anchored" data-anchor-id="what-follows-hunt">What follows “hunt”?</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tog_hunt_post <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word_s, <span class="st">"hunt"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word_s, next_word_s, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dt_table</span>(tog_hunt_post,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption    =</span> <span class="st">"Words immediately following hunt/hunter/hunting."</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">pageLength =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-f8174d83832098e584ee" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f8174d83832098e584ee">{"x":{"filter":"none","vertical":false,"caption":"<caption>Words immediately following hunt/hunter/hunting.<\/caption>","data":[["hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt"],["gather","people","group","human","society","large","fish","life","live","hunt","area","integrate","population","small","band","behavior","collect","economy","territory","involve","complex","find","land","male","man","provide","adaptation","animal","big","culture","east","game","good","importance","regard","sea","social","time","today","female","form","kayak","leave","master","method","part","pattern","system","terrestrial","weapon","world","young","ability","activity","archer","australian","bring","close","collector","community","contrast","depend","discuss","dog","early","exist","expedition","food","general","habit","hand","hut","include","individually","kill","local","make","mammal","mentality","party","place","point","primary","rabbit","recognize","require","share","single","subsistence","success","symposium","tend","turnbull","woman","active","actively","aggressive","agricultural","apparently","arm","atla","autumn","baboon","bow","breathe","butcher","caribou","carry","category","change","chapter","comparison","condition","control","convenient","datum","density","dependent","domesticate","dominate","eastern","eat","employ","ethnographic","evidence","exclude","expect","family","generally","half","high","hungry","important","impressive","india","informant","lack","learn","levi","limit","lone","major","maximum","member","mention","move","north","obtain","organization","participant","past","play","pleasure","practice","proceed","productive","profitably","pygmy","reason","recent","region","remove","reveal","scavenge","show","simply","spear","spend","spread","steward","task","technique","throw","transport","transportation","tribe","tropical","war","work","year","absence","accident","accumulation","achievement","acholi","adaptive","addition","adulthood","advantage","advantageously","affair","affluent","africa","agree","agriculturalist","aleuts","alland","alternative","anthropologist","apd","ape","approximate","aquatic","archeological","archeologically","arfak","artifact","attempt","australia","australopithecus","average","avidly","balikci","bay","bear","beast","belong","bird","bourgeois","burst","bushman","business","call","camp","capable","capture","carpenter","case","catch","cease","cent","chart","check","child","choice","clear","coastal","collectingsociety","commit","common","communal","compare","concern","conference","confidence","considerable","consist","constitute","continue","contribute","converge","convert","cooperation","coordinate","corollary","country","cover","crocker","cultivator","cycle","deer","deliberately","demand","demonstrate","development","device","devolution","devolve","devote","differentiation","difficult","dig","discussion","distinctive","distribution","dobe","domestic","dominant","due","easily","effectively","efficiency","elderly","elephant","emphasis","encourage","end","endure","enormous","episode","eskimo","estimate","evolutionary","exceed","excellence","exclusively","exert","exotic","expanse","experience","expert","explain","express","external","extra","extrapolate","extremely","face","facilitate","facility","fail","fairly","familiar","familiarity","famous","fbod","feast","feel","field","final","finger","fisherman","fix","follow","foot","forage","forager","forest","founder","fragment","frame","future","gamble","gardener","give","goodalps","grassland","great","grind","guarantee","gun","hadza","happiness","harass","hare","harpoon","hat","heizer","helm","hide","highly","hill","hit","honey","horse","ideology","illustrate","imply","impractical","improve","inactive","inclination","increase","increasingly","independent","inhabitant","inland","instrumental","integration","intentionally","inter","interest","interfluvial","intermarry","intrinsic","introduction","invent","invest","isolate","judge","kind","kwarikik","leach","lead","leader","lee","lie","light","lion","locate","lose","loss","maintain","manage","marginal","marshall","marsupial","matter","mature","maximal","maximize","meat","mediocre","medium","meet","migratory","modern","month","mountain","murdock","naturalist","nature","necessitate","net","nonetheless","northern","northwest","nutritional","occasional","occupation","occupy","oflife","omar","opportunity","optimum","orientation","overemphasize","oversimplification","p.t","pack","paleolithic","partner","peaceful","perform","period","periodical","perspective","physical","plain","pleistocene","poor","position","possibly","predation","prepare","prestigious","previous","primitive","probability","probable","problem","procedure","process","produce","product","profession","profitable","projection","protein","pursuit","put","quarry","radius","raise","randomize","rank","rarely","rate","recently","reconsider","record","reflect","reform","regular","regurgitate","relate","relation","relationship","relevance","reliable","remain","remark","remember","represent","reproductive","requirement","reservation","rest","result","reverse","rich","river","route","rule","run","safe","sahlins","scarce","schedule","school","seal","search","season","sedentary","sequence","set","sharp","sherwood","shoot","short","shrink","shut","signal","similar","simple","singly","siriono","situation","sixteen","size","skill","slightly","smell","sophisticate","speaker","specialize","specific","split","sporadic","stalk","stay","store","storm","strategy","stress","struever","study","substantial","substitute","succeed","suggest","supernatural","supply","surprisingly","survivor","technology","temporarily","tillage","tool","topic","total","tow","trace","traditional","train","trap","treat","twofold","type","understand","universal","universe","university","unpredictable","vantage","variance","variety","versus","vulture","warrant","week","western","wife","wild","william","winter","yukaghir"],[371,36,34,32,31,25,22,20,20,15,11,10,10,10,9,9,9,9,9,7,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[24,2.3,2.2,2.1,2,1.6,1.4,1.3,1.3,1,0.7,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.5,0.4,0.4,0.4,0.4,0.4,0.4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]],"container":"<table class=\"compact stripe hover\">\n  <thead>\n    <tr>\n      <th>word_s<\/th>\n      <th>next_word_s<\/th>\n      <th>n<\/th>\n      <th>percent<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"word_s","targets":0},{"name":"next_word_s","targets":1},{"name":"n","targets":2},{"name":"percent","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="what-precedes-hunt" class="level3">
+<h3 class="anchored" data-anchor-id="what-precedes-hunt">What precedes “hunt”?</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tog_hunt_pre <span class="ot">&lt;-</span> words_nearby <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_starts</span>(word_s, <span class="st">"hunt"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pre_word_s, word_s, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dt_table</span>(tog_hunt_pre,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption    =</span> <span class="st">"Words immediately preceding hunt/hunter/hunting."</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">pageLength =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-8a8762f4144c71e2c9e7" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8a8762f4144c71e2c9e7">{"x":{"filter":"none","vertical":false,"caption":"<caption>Words immediately preceding hunt/hunter/hunting.<\/caption>","data":[["man","live","modern","prehistoric","study","human","net","primitive","hunt","world","game","gather","mammal","group","kayak","organization","evolution","pleistocene","animal","importance","lee","society","system","time","view","case","deer","fish","generalize","laughlin","people","ancient","disease","find","good","hadza","make","recent","allocation","bear","contemporary","evidence","part","species","survive","area","base","camp","caribou","characteristic","food","interest","life","model","mount","nature","nomadic","pattern","simple","success","term","agree","american","apply","aquatic","assumption","australian","cent","collect","communal","concern","condition","day","dependence","describe","feature","flux","form","important","numb","order","population","problem","pure","relate","role","seal","skill","source","structure","successful","work","active","adapt","agriculture","attribute","back","behavior","bushman","category","child","classify","common","consideration","datum","define","dependent","development","diet","easily","engage","exist","experience","factor","future","indian","individualistic","information","kind","lathrap","level","marine","member","otter","point","pressure","reason","relation","require","research","sample","sense","size","spear","style","summer","superior","terrestrial","tool","type","typical","unable","understand","winter","aboriginal","accustom","activity","adaptation","adaptive","adult","african","america","amount","anxiety","arctic","arrangement","aspect","band","basic","big","call","clear","community","compare","comparison","conclusion","contact","continue","control","cooperative","date","death","decide","defense","definition","density","desert","disorder","displace","distribution","diverse","division","dog","dorobo","early","efficiency","effort","element","elephant","evolve","extant","fact","female","forage","function","general","grouping","head","high","hominid","idea","incidence","include","individual","inland","introduction","involve","labor","leave","list","literature","male","marginal","maximize","mbuti","mechanism","mentality","mention","mortality","musk","naked","neolithic","noncommunal","number","numerous","occasionally","occupy","period","picture","possibility","practice","primarily","primate","priority","process","productive","pygmy","quality","relationship","scale","seasonal","selection","settlement","show","siberian","single","small","solely","southern","space","speak","specifically","student","subsist","subsistence","suggest","supply","symposium","technology","true","variation","vii","watanabe","week","williams","woman","year","absent","account","acculturated","act","actively","adaptability","adaptively","addition","adequately","advantage","affluent","afield","age","ago","agriculturalist","agriculturist","ainu","alert","algonkians","alternative","amahuaca","amazonian","ammals","analysis","appreciation","approach","archer","arrange","arrow","asian","assert","associate","assume","attention","attitude","australia","authority","average","avis","avoidance","bantu","bedfellow","begin","berry","bipedal","boat","boundary","boy","brazilian","bring","broadly","brother","buffalo","build","care","catch","caution","cave","center","central","chaos","characterization","characterize","choice","classic","climax","combination","commitment","commonality","competent","competitiveness","complex","conceal","conceive","concept","conceptualization","conduct","configuration","confine","conjectural","connection","context","continuation","contradictory","contrast","contribution","conventionally","convert","convince","coon","cooperate","cooperation","correct","cost","creek","cue","cultivator","culture","currency","current","daily","damas","deal","decrease","definitionof","delineation","demography","demonstrate","depend","design","detail","develop","device","devolve","difference","directly","disadvantage","discrete","discuss","dispersal","distance","distinction","distinctive","distinguish","dynamic","ease","easy","economics","economy","effect","effective","efficacy","elaborate","elderly","emerge","emphasis","enclave","endocrine","enjoy","environment","equate","equation","equip","eskimo","establishment","estimate","ethiopian","european","event","excellence","excellent","exception","excite","exclusively","excuse","exercise","existence","exogamy","expect","expectancy","expense","exploit","exposure","extension","extent","face","facilitate","failure","family","famine","father","fauna","favorable","fee","fellow","fieldwork","fluidity","focus","foe","follow","forest","frequent","full","gamble","generalization","generally","generation","george","give","grandmother","great","greatly","ground","guess","habilis","habit","habitat","happy","heading","health","heavily","herd","history","homeostasis","hour","hungry","hypothesis","i.e","imagine","implication","impose","impression","inadequacy","increase","incur","independently","infection","infrequently","ingenuity","inhabit","initiate","insight","instruction","inventory","island","isolate","jenness","judge","kangaroo","kill","knowledge","lack","land","large","latitude","learn","livelihood","local","locally","locate","low","loyalty","machinery","makeup","maki","mandays","medicine","meet","mere","method","migration","migratory","mind","minimal","minor","mix","mobile","modal","mode","moiety","monkey","month","motivation","move","movement","native","nearby","netsilingmiut","nomadism","northeastern","northern","note","notion","objective","observation","occur","occurrence","oma","orient","orientation","owe","pack","pair","paleolithic","peculiar","pedestrian","pericardium","persistence","phase","place","placement","police","polunin","poor","porportion","portion","pouch","poverty","precarious","predict","preference","presence","present","prevalent","previously","prime","prior","pristine","probability","prodigality","product","professional","profitable","protozoan","put","pygmoid","pyramid","qualify","quantity","quest","question","radically","raft","randomize","range","rarely","ratio","readaptation","reaggregates","realm","reciprocity","record","reference","reform","refuse","rehabilitation","reindeer","relay","reliance","reluctance","rely","remo","repeatedly","representative","requirement","residence","resident","resource","result","return","reverse","revert","review","savanna","scavenge","schedule","scrutiny","secondarily","sedentary","seedgrinding","series","set","sex","shellfish","shift","shoot","short","shoshoni","sight","similar","situation","smell","snare","solitary","solution","sophistication","sort","specialize","split","sport","stability","stand","starvation","statement","status","stigma","stop","subdivision","subsequent","subsidiary","substantially","suitable","support","sustain","suttles","talk","tanganyika","task","tendency","territoriality","territory","theanimal","thesis","thing","threshold","today","tooths","trade","train","travois","tribal","tribe","tropical","tundra","twelve","typology","uman","unacculturated","unbalance","undoubtedly","unhealed","unimportance","unique","unit","universal","universe","unlucky","unproductive","unsuccessful","usual","veddoid","vegetarian","versed","versus","village","virtue","war","warfare","whale","wood","woodsman","word","yield","youth","zone"],["hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt","hunt"],[37,23,22,21,21,16,16,16,15,14,13,13,13,12,11,11,10,10,9,9,9,9,9,9,9,8,8,8,8,8,8,7,7,7,7,7,7,7,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[2.4,1.5,1.4,1.4,1.4,1,1,1,1,0.9,0.8,0.8,0.8,0.8,0.7,0.7,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]],"container":"<table class=\"compact stripe hover\">\n  <thead>\n    <tr>\n      <th>pre_word_s<\/th>\n      <th>word_s<\/th>\n      <th>n<\/th>\n      <th>percent<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"pre_word_s","targets":0},{"name":"word_s","targets":1},{"name":"n","targets":2},{"name":"percent","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Approximately 70.5% of the 526 occurrences of “gather” are immediately preceded by “hunt”, confirming that the majority of gather/gatherer instances are part of the compound “hunter-gatherer” rather than independent references to gathering as a subsistence activity. By contrast, hunt/hunting is followed by a gather variant in approximately 24% of cases, meaning around three quarters of hunting references stand independently of the compound. The most common word preceding “hunt” is “man”, accounting for 2.4% of occurrences.</p>
+</section>
+</section>
+<section id="appendix-survey-of-stopword-lists" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-survey-of-stopword-lists">Appendix: Survey of Stopword Lists</h2>
+<p>To assess how unusual it is for a stopword list to contain “man” or “men”, we examined 68 English stopword lists compiled by <a href="https://github.com/igorbrigadir/stopwords">igorbrigadir/stopwords</a>, a comprehensive repository of stopword lists from NLP tools, search engines, and text analysis libraries.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"stopwords-master"</span>)) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://github.com/igorbrigadir/stopwords/archive/refs/heads/master.zip"</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> <span class="st">"stopwords-master.zip"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unzip</span>(<span class="st">"stopwords-master.zip"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>sw_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"stopwords-master/en/"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.txt$"</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>sw_results <span class="ot">&lt;-</span> <span class="fu">map_df</span>(sw_files, <span class="cf">function</span>(f) {</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  words <span class="ot">&lt;-</span> <span class="fu">readLines</span>(f, <span class="at">warn =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">tolower</span>() <span class="sc">%&gt;%</span> <span class="fu">trimws</span>()</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">file      =</span> <span class="fu">basename</span>(f),</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_words   =</span> <span class="fu">length</span>(words),</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_man   =</span> <span class="st">"man"</span>   <span class="sc">%in%</span> words,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_men   =</span> <span class="st">"men"</span>   <span class="sc">%in%</span> words,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_woman =</span> <span class="st">"woman"</span> <span class="sc">%in%</span> words,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_women =</span> <span class="st">"women"</span> <span class="sc">%in%</span> words</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sw_details <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"stopwords-master/en_stopwords.csv"</span>), <span class="at">by =</span> <span class="st">"file"</span> )</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>n_lists <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sw_results)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>n_with_man <span class="ot">&lt;-</span> <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_man)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Term                    =</span> <span class="fu">c</span>(<span class="st">"man"</span>, <span class="st">"men"</span>, <span class="st">"woman"</span>, <span class="st">"women"</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Lists containing term</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">sum</span>(sw_results<span class="sc">$</span>has_man),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_men),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_woman),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_women)),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Total lists</span><span class="st">`</span>           <span class="ot">=</span> n_lists,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Percent</span><span class="st">`</span>               <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">c</span>(<span class="fu">sum</span>(sw_results<span class="sc">$</span>has_man),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_men),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_woman),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">sum</span>(sw_results<span class="sc">$</span>has_women)) <span class="sc">/</span> n_lists, <span class="dv">1</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">paste</span>(<span class="st">"Frequency of gendered terms across"</span>, n_lists, <span class="st">"English stopword lists."</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Frequency of gendered terms across 68 English stopword lists.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Lists containing term</th>
+<th style="text-align: right;">Total lists</th>
+<th style="text-align: right;">Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">man</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">5.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">men</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">woman</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">women</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>No stopword list contains “woman” or “women”. 4 lists contain “man” and <code>r``sum(sw_results$has_men)</code> contain “men”. These 4 can be seen below. Of them, several seem to have been based on the onix list.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sw_results <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(has_man) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, n_words, source_url , date) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"List"</span>, <span class="st">"Words"</span>, <span class="st">"link"</span>, <span class="st">"date"</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption   =</span> <span class="st">"Stopword lists containing 'man', none of which contain 'woman'."</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Stopword lists containing ‘man’, none of which contain ‘woman’.</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 81%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">List</th>
+<th style="text-align: right;">Words</th>
+<th style="text-align: left;">link</th>
+<th style="text-align: left;">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alir3z4</td>
+<td style="text-align: right;">1298</td>
+<td style="text-align: left;">https://github.com/Alir3z4/stop-words/blob/master/english.txt</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATIRE (Puurula)</td>
+<td style="text-align: right;">988</td>
+<td style="text-align: left;">http://www.atire.org/hg/atire/file/tip/source/stop_word.c</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DataScienceDojo</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: left;">https://github.com/datasciencedojo/meetup/blob/master/real-time_sentiment/AzureML%20Code/Stop%20Words%20Simple%20List.csv</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Onix &amp; Lextek</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: left;">http://www.lextek.com/manuals/onix/stopwords1.html</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The onix list was developed by Lextek International in the early 1990s as part of a commercial text retrieval toolkit. Its inclusion of “man” reflects an assumption common in information retrieval of that era: that “man” usually functions as a generic synonym for “human” and is thus uninformative as a search term, while “woman” is a specific context word. This assumption is an example of the inherent bias and ambiguity in English, but also serves as a reminder that careful reading of stopword lists should be a part of any textual analysis.</p>
 </section>
 
 </main>
